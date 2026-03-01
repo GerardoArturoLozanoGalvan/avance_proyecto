@@ -9,6 +9,51 @@ function authRoutes(db) {
   const router = express.Router();
 
   router.post(
+    '/register',
+    validateBody([
+      isRequired('nombre', 'Nombre'),
+      isRequired('correo', 'Correo'),
+      isRequired('password', 'Contraseña'),
+      isEmail('correo', 'Correo')
+    ]),
+    asyncHandler(async (req, res) => {
+      const nombre = String(req.body.nombre).trim();
+      const correo = String(req.body.correo).toLowerCase().trim();
+      const password = String(req.body.password).trim();
+
+      if (!correo.endsWith('@gmail.com')) {
+        throw new AppError(400, 'Solo se permiten correos @gmail.com');
+      }
+
+      const [existRows] = await db.execute('SELECT id FROM usuarios WHERE correo = ? LIMIT 1', [correo]);
+      if (existRows.length) {
+        throw new AppError(409, 'Ese correo ya está registrado');
+      }
+
+      const rol = correo === 'admin@gmail.com' ? 'admin' : 'usuario';
+      if (rol === 'admin') {
+        const [adminRows] = await db.execute(
+          "SELECT id FROM usuarios WHERE rol = 'admin' AND correo = 'admin@gmail.com' LIMIT 1"
+        );
+        if (adminRows.length) {
+          throw new AppError(400, 'La cuenta admin@gmail.com ya existe');
+        }
+      }
+
+      const [result] = await db.execute(
+        'INSERT INTO usuarios (nombre, correo, password, rol) VALUES (?, ?, ?, ?)',
+        [nombre, correo, password, rol]
+      );
+
+      res.status(201).json({
+        ok: true,
+        message: 'Usuario creado',
+        id: result.insertId
+      });
+    })
+  );
+
+  router.post(
     '/login',
     validateBody([
       isRequired('correo', 'Correo'),

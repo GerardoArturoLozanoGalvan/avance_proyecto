@@ -20,6 +20,22 @@ function createFakeDb() {
         return [[]];
       }
 
+      if (sql.includes('SELECT id FROM usuarios WHERE correo = ? LIMIT 1')) {
+        const [correo] = params;
+        if (correo === 'admin@gmail.com' || correo === 'user@gmail.com') {
+          return [[{ id: 1 }]];
+        }
+        return [[]];
+      }
+
+      if (sql.includes("SELECT id FROM usuarios WHERE rol = 'admin' AND correo = 'admin@gmail.com' LIMIT 1")) {
+        return [[{ id: 1 }]];
+      }
+
+      if (sql.startsWith('INSERT INTO usuarios (nombre, correo, password, rol) VALUES (?, ?, ?, ?)')) {
+        return [{ insertId: 3 }];
+      }
+
       if (sql.includes('COUNT(*) AS total FROM productos')) {
         return [[{ total: 1 }]];
       }
@@ -80,6 +96,18 @@ test('POST /auth/login devuelve JWT para credenciales correctas', async () => {
   assert.equal(response.body.ok, true);
   assert.ok(response.body.token);
   assert.equal(response.body.usuario.rol, 'admin');
+});
+
+test('POST /auth/register crea usuario público válido', async () => {
+  const app = createApp(createFakeDb());
+
+  const response = await request(app)
+    .post('/auth/register')
+    .send({ nombre: 'Nuevo', correo: 'nuevo@gmail.com', password: 'Nuevo123!' });
+
+  assert.equal(response.status, 201);
+  assert.equal(response.body.ok, true);
+  assert.equal(response.body.message, 'Usuario creado');
 });
 
 test('GET /productos requiere token (seguridad)', async () => {
