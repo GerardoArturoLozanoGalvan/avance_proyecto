@@ -1,42 +1,26 @@
-DESPLIEGUE COMPLETO EN RENDER (FRONTEND + BACKEND)
+RENDER - SOLO LO BÁSICO (FRONTEND + BACKEND)
 
-Sí, la vez pasada usamos Render. Ya dejé el proyecto preparado para desplegar ahí con un blueprint en render.yaml.
+1) Subir a GitHub
+- Asegúrate de que el proyecto esté en tu repositorio.
 
-1) Qué ya quedó preparado
-- Backend Node listo en carpeta backend con npm start.
-- Frontend React listo en frontend/react-spa.
-- URL del backend en frontend configurable por variable VITE_API_BASE_URL.
-- Archivo render.yaml creado para levantar ambos servicios:
-  - heb-backend (Web Service)
-  - heb-frontend (Static Site)
+2) Crear servicios en Render
+- En Render: New + -> Blueprint.
+- Conecta tu repo.
+- Render detecta `render.yaml` y crea:
+  - `heb-backend` (Web Service)
+  - `heb-frontend` (Static Site)
 
-2) Pasos para desplegar en Render
-1. Sube este proyecto a GitHub.
-2. En Render, elige "New +" -> "Blueprint".
-3. Conecta el repositorio y Render detectará render.yaml.
-4. Crea los servicios.
-5. En el servicio heb-backend configura variables:
-   - DB_HOST
-   - DB_USER
-   - DB_PASSWORD
-   - DB_NAME
-   - JWT_SECRET
-6. En heb-frontend, revisa VITE_API_BASE_URL y cámbiala por la URL real del backend en Render (ejemplo: https://heb-backend.onrender.com).
-7. Haz redeploy de frontend si cambiaste la URL.
+3) Variables mínimas (backend)
+- `JWT_SECRET=tu_clave_segura`
+- `MOCK_MODE=true` ya viene preconfigurado en `render.yaml`.
 
-3) Cómo comprobar integración en producción
-- Abre la URL del frontend de Render.
-- Inicia sesión con un usuario real de tu base.
-- Verifica carga de productos.
-- Si eres admin, verifica acceso a gestionar usuarios.
-- Prueba cambio de cantidad y que se guarde.
-- Prueba cambio de moneda MXN/USD.
+4) Variable mínima (frontend)
+- `VITE_API_BASE_URL=https://TU-BACKEND.onrender.com`
+- (Se configura en Render cuando ya tengas la URL real del backend.)
 
-4) Evidencia para la entrega
-- Captura de servicios en Render (backend y frontend en "Live").
-- Captura de frontend funcionando en URL pública.
-- Captura de login exitoso.
-- Captura de productos/usuarios consumiendo API en producción.
+5) Verificación rápida
+- Backend: abre `https://TU-BACKEND.onrender.com/health`
+  - Debe responder `ok:true` y `dbMode:mock`.
+- Frontend: abre la URL pública de `heb-frontend` y prueba login + productos.
 
-Nota sobre Docker (opcional):
-No es obligatorio para Render en este proyecto porque Render despliega Node/Static de forma nativa con build/start commands.
+Con eso ya queda funcionando en nube para demo sin MySQL remoto.

@@ -14,7 +14,12 @@ function createApp(db, options = {}) {
   app.use(express.json());
 
   app.get('/health', (req, res) => {
-    res.json({ ok: true, service: 'backend-api', timestamp: new Date().toISOString() });
+    res.json({
+      ok: true,
+      service: 'backend-api',
+      dbMode: db && db.isMock ? 'mock' : 'mysql',
+      timestamp: new Date().toISOString()
+    });
   });
 
   app.use('/auth', authRoutes(db));

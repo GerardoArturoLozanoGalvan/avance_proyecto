@@ -11,7 +11,11 @@ async function startServer() {
 
   try {
     await db.query('SELECT 1');
-    console.log('MySQL conectado');
+    if (db.isMock) {
+      console.log('Backend en modo MOCK (sin MySQL remoto)');
+    } else {
+      console.log('MySQL conectado');
+    }
   } catch (error) {
     console.error('Error MySQL:', error.message);
   }
