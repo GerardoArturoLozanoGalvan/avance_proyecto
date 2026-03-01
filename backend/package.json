@@ -1,0 +1,19 @@
+{
+  "name": "avance-proyecto-backend",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "node --watch index.js",
+    "debug": "node --inspect index.js",
+    "test": "node --test"
+  },
+  "dependencies": {
+    "cors": "^2.8.6",
+    "dotenv": "^17.2.3",
+    "express": "^5.2.1",
+    "jsonwebtoken": "^9.0.3",
+    "mysql2": "^3.16.2",
+    "supertest": "^7.1.4"
+  }
+}

@@ -1,0 +1,12 @@
+header {
+  background: red;
+  color: white;
+  padding: 15px;
+  display: flex;
+  justify-content: space-between;
+}
+
+button {
+  padding: 8px;
+  margin: 5px;
+}

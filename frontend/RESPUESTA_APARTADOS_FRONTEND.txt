@@ -1,0 +1,31 @@
+RESPUESTA DE MEJORAS EN FRONTEND (RESUMIDA)
+
+ACLARACIÓN IMPORTANTE SOBRE EL MENÚ
+El frontend en React ya quedó integrado como interfaz principal del proyecto. Esto significa que el menú nuevo, la navegación por rutas y el control por rol ahora son la experiencia principal que se muestra al abrir el sistema.
+
+La versión anterior se dejó solo como respaldo técnico, pero la navegación principal del proyecto ya corresponde a React.
+
+1) Uso de framework frontend
+Se implementó un frontend nuevo con React para mejorar la estructura del proyecto y separar la interfaz por componentes. Esto hace más fácil mantener y ampliar la aplicación cuando crecen las funcionalidades.
+
+Con React se organizó mejor el flujo de login, productos y usuarios en una SPA, evitando recargas completas entre secciones.
+
+2) Consulta a IA sobre rutas dinámicas
+Se consultó a una IA cómo configurar rutas dinámicas en React Router y se evaluó la opción de usar rutas protegidas y rutas con parámetro (por ejemplo, productos por id). Se eligió esta opción por ser la más clara y útil para el proyecto.
+
+La solución se adaptó con navegación real y acceso por rol, para que la app tenga rutas funcionales y seguras sin complicar la experiencia de uso.
+
+3) Implementación de rutas y sistema de navegación
+Se implementaron rutas en frontend con React Router: login, productos, detalle dinámico de producto y sección de usuarios. También se añadió navegación desde el menú superior.
+
+Además, se configuraron rutas privadas para usuarios autenticados y una ruta exclusiva para admin, cumpliendo el requerimiento de navegación con control de acceso.
+
+4) Interfaz responsiva y experiencia de usuario
+Se ajustó el diseño para que funcione bien en desktop y móvil con layout flexible y tarjetas en grid responsivo. El menú también se adapta a pantallas pequeñas.
+
+Esto mejora la experiencia de usuario porque mantiene buena lectura, botones accesibles y navegación simple en distintos tamaños de pantalla.
+
+5) Sistema de sesiones en frontend
+Se implementó sesión en frontend con almacenamiento local del token JWT y datos del usuario. Al iniciar sesión se guarda la sesión; al cerrar sesión se limpia y se protege el acceso.
+
+También se agregaron rutas protegidas para bloquear páginas si no hay sesión y para permitir secciones de administración solo cuando el rol es admin.

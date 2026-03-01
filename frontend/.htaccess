@@ -1,0 +1,10 @@
+RewriteEngine On
+RewriteBase /avance_proyecto/frontend/
+
+RewriteRule ^assets/ - [L]
+RewriteRule ^vite\.svg$ - [L]
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule . - [L]
+
+RewriteRule . /avance_proyecto/frontend/index.html [L]
